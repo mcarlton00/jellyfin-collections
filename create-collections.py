@@ -11,9 +11,9 @@ Advanced -> Security
 You must have an account with themoviedb to get an API key
 https://developers.themoviedb.org/3/getting-started/introduction
 """
-#serverURL = "http://localhost:8096/emby"
-#jellyfinApiKey = "foo"
-#tmdb.API_KEY = "bar"
+serverURL = "http://localhost/emby:8096"
+jellyfinApiKey = "foo"
+tmdb.API_KEY = "bar"
 
 headers = {'X-Emby-Token': jellyfinApiKey}
 
@@ -27,7 +27,7 @@ library = requests.get(
 )
 
 # Loop through movies, looking them up at themoviedb.
-for movie in library.json()['Items']:
+for movie in library.json()['Items'][:100]:
     collectionID = ""
     jellyfinID = movie.get('Id')
     tmdbID = movie.get('ProviderIds').get('Tmdb')
@@ -74,8 +74,14 @@ with open("collection-errors.txt", "w") as errorFile:
     for error in errors:
         errorFile.write(error + '\n')
 
-# Loop through the newly created dictionary, creating each collection
+print("""\n\n=================================
+Data lookup complete.
+Starting to create collections...
+=================================\n\n""")
+
+# Loop through the newly created dictionary, creating collections and items
 for collection, data in collections.items():
+    # Only create a collection if it has more than 1 entry
     if len(data['ids']) > 1:
         # Create a collection
         print("\nCreating " + data['rawName'])
@@ -84,16 +90,6 @@ for collection, data in collections.items():
             "/Collections?Name=" + data['Name'],
             headers=headers
         )
-
-print("""\n\n=================================
-Data lookup complete.
-Starting to create collections...
-=================================\n\n""")
-
-# Loops through everything added to the collections dictionary
-for collection, data in collections.items():
-    # Only create a collection if it has more than 1 entry
-    if len(data['ids']) > 1:
 
         libraryCollections = requests.get(
             serverURL + "/Items?Recursive=true&IncludeItemTypes=BoxSet",

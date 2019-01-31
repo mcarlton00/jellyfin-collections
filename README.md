@@ -13,4 +13,4 @@
   * `pip install -r requirements.txt`
 * Edit `collections.py` with required information
   * api keys and server URL
-* run `python collections.py`
+* run `python create-collections.py`
