@@ -4,8 +4,6 @@
 
 * A Jellyfin api key
   * Admin panel -> Advanced -> Security
-* A themoviedb api key
-  * https://developers.themoviedb.org/3/getting-started/introduction
 
 ## Usage
 
