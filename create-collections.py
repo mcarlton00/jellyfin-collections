@@ -2,6 +2,7 @@ import requests
 import tmdbsimple as tmdb
 import time
 import urllib
+import sys
 
 
 """
@@ -11,9 +12,9 @@ Advanced -> Security
 You must have an account with themoviedb to get an API key
 https://developers.themoviedb.org/3/getting-started/introduction
 """
-serverURL = "http://localhost/emby:8096"
-jellyfinApiKey = "foo"
-tmdb.API_KEY = "bar"
+#serverURL = "http://localhost/emby:8096"
+#jellyfinApiKey = "foo"
+#tmdb.API_KEY = "bar"
 
 headers = {'X-Emby-Token': jellyfinApiKey}
 
@@ -26,8 +27,17 @@ library = requests.get(
     headers=headers
 )
 
+if not library:
+    print("Error connecting to jellyfin server")
+    sys.exit(1)
+
+print("""\n\n=================================
+Successfully authenticated with jellyfin
+Beginning to search for collection info
+=================================\n\n""")
+
 # Loop through movies, looking them up at themoviedb.
-for movie in library.json()['Items'][:100]:
+for movie in library.json()['Items']:
     collectionID = ""
     jellyfinID = movie.get('Id')
     tmdbID = movie.get('ProviderIds').get('Tmdb')
@@ -131,4 +141,8 @@ refresh = requests.post(
 
 print("""\n\n=================================
 Collection generation complete
+=================================\n\n""")
+
+print("""=================================
+Triggering metadata refresh on collections
 =================================\n\n""")
