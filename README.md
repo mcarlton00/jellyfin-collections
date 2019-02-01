@@ -2,6 +2,7 @@
 
 ## Requires
 
+* Python3.6 or greater
 * A Jellyfin api key
   * Admin panel -> Advanced -> Security
 
