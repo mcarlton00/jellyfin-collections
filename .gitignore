@@ -1,2 +1,6 @@
 *.pyc
 collection-errors.txt
+.venv
+poetry.lock
+pyproject.toml
+.idea/*
