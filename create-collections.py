@@ -1,8 +1,8 @@
 import argparse
 import logging
+import re
 import sys
 import time
-import re
 import urllib
 from typing import Dict
 from typing import List
