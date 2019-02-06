@@ -19,7 +19,7 @@ from requests.models import Response
 # then navigating to Advanced -> Security
 ####################################################
 
-server_url = "localhost:8096"
+server_url = "http://localhost:8096"
 jellyfin_api_key = "foo"
 
 ####################################################
