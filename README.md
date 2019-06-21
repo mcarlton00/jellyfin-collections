@@ -1,3 +1,5 @@
+Note: Obsoleted by official collections plugin: https://github.com/jellyfin/jellyfin-plugin-tmdbboxsets
+
 # jellyfin-collections
 
 ## Requires
